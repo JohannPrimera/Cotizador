@@ -438,12 +438,16 @@ footer a:hover {
 footer img {
     height: 2rem;
     width: 2rem;
-    filter: grayscale(100%) brightness(1.5);
+    padding: 0.35rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    filter: invert(1) brightness(1.1);
     transition: var(--transition-smooth);
 }
 
 footer img:hover {
-    filter: grayscale(0%) brightness(1) drop-shadow(0 0 10px var(--primary-color));
+    background: rgba(255, 255, 255, 0.25);
+    filter: invert(1) brightness(1.2) drop-shadow(0 0 10px var(--primary-color));
 }
 
 /* === IMAGE UTILITIES === */
