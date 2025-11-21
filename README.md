@@ -12,7 +12,8 @@ Aplicación web ligera que consulta la API pública de CryptoCompare para mostra
 ### Tecnologías
 - HTML5 semántico para la estructura base.
 - CSS3 con variables personalizadas y animaciones.
-- JavaScript vanilla para gestionar eventos, fetch asíncrono y renderizado dinámico.
+- JavaScript vanilla para gestionar eventos y renderizado dinámico.
+- API `fetch` nativa del navegador para consumir CryptoCompare sin dependencias externas.
 
 ### Estructura del proyecto
 ```
