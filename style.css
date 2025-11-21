@@ -338,6 +338,7 @@ select option {
 
 /* === COIN INFO DISPLAY === */
 #coin-info {
+    display: none;
     padding: 2rem;
     background: var(--glass-bg);
     backdrop-filter: blur(20px);

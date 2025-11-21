@@ -11,6 +11,7 @@ form.addEventListener('submit', async e => {
     const cryptoSelected = [...crypto.children].find(option => option.selected).value;
     const amountValue = amount.value;
     try {
+        coinInfo.style.display = 'block';
         coinInfo.innerHTML = `
         <div class="loader"></div>
         `; 
