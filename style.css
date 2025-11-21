@@ -1,238 +1,535 @@
+/* ============================================
+   MODERN CRYPTO QUOTER - PREMIUM AESTHETIC
+   ============================================ */
+
+/* === RESET & BASE === */
 *,
 ::before,
-::after{
+::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     border-width: 0;
     border-style: solid;
-
 }
 
-.bebas-neue-regular {
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+/* === CUSTOM PROPERTIES (CSS Variables) === */
+:root {
+    /* Modern Color Palette - HSL for easy manipulation */
+    --primary-hue: 280;
+    --secondary-hue: 200;
+
+    --bg-dark: hsl(240, 15%, 8%);
+    --bg-darker: hsl(240, 20%, 5%);
+
+    --primary-color: hsl(var(--primary-hue), 85%, 60%);
+    --primary-light: hsl(var(--primary-hue), 85%, 70%);
+    --primary-dark: hsl(var(--primary-hue), 85%, 50%);
+
+    --secondary-color: hsl(var(--secondary-hue), 75%, 55%);
+    --secondary-light: hsl(var(--secondary-hue), 75%, 65%);
+
+    --accent-color: hsl(340, 82%, 58%);
+    --accent-light: hsl(340, 82%, 68%);
+
+    --text-primary: hsl(0, 0%, 98%);
+    --text-secondary: hsl(0, 0%, 75%);
+    --text-muted: hsl(0, 0%, 60%);
+
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-img{
+/* === TYPOGRAPHY === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-darker);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* === ANIMATED GRADIENT BACKGROUND === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 20% 20%, hsla(var(--primary-hue), 85%, 60%, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, hsla(var(--secondary-hue), 75%, 55%, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, hsla(340, 82%, 58%, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.1) rotate(2deg);
+    }
+}
+
+/* === MAIN CONTAINER === */
+#container {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 2rem 2rem 3rem;
+    position: relative;
+}
+
+/* === LEFT SECTION - TITLE & IMAGE === */
+#ttimg {
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+    gap: 2rem;
+    animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#title {
+    font-size: 6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    background: linear-gradient(135deg,
+            var(--primary-color) 0%,
+            var(--secondary-color) 50%,
+            var(--accent-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleGlow 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px hsla(var(--primary-hue), 85%, 60%, 0.3));
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 30px hsla(var(--primary-hue), 85%, 60%, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 50px hsla(var(--primary-hue), 85%, 60%, 0.5));
+    }
+}
+
+#leftImg {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.3));
+    transition: var(--transition-smooth);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+#leftImg:hover {
+    transform: scale(1.05) translateY(-10px);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.4));
+}
+
+/* === RIGHT SECTION - FORM CONTAINER === */
+#coin-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 42%;
+    animation: slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* === GLASSMORPHISM FORM === */
+#coin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    padding: 2.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 8px 32px var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: var(--transition-smooth);
+}
+
+#coin-form:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* === INPUT CONTAINERS === */
+.coinIptCont {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.coinIptCont label {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    margin-left: 4px;
+}
+
+/* === STYLISH INPUTS & SELECTS === */
+.coinInput,
+select {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-primary);
+    outline: none;
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(10px);
+}
+
+.coinInput::placeholder {
+    color: var(--text-muted);
+}
+
+.coinInput:focus,
+select:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary-color);
+    box-shadow:
+        0 0 0 4px hsla(var(--primary-hue), 85%, 60%, 0.1),
+        0 8px 24px hsla(var(--primary-hue), 85%, 60%, 0.2);
+    transform: translateY(-2px);
+}
+
+.coinInput:hover:not(:focus),
+select:hover:not(:focus) {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* === SELECT SPECIFIC STYLING === */
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 3rem;
+}
+
+select option {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+/* === PREMIUM BUTTON === */
+#formBtn {
+    padding: 1.1rem 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow:
+        0 10px 30px hsla(var(--primary-hue), 85%, 60%, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: var(--transition-spring);
+    position: relative;
+    overflow: hidden;
+}
+
+#formBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+#formBtn:hover::before {
+    left: 100%;
+}
+
+#formBtn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 15px 40px hsla(var(--primary-hue), 85%, 60%, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+#formBtn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow:
+        0 5px 20px hsla(var(--primary-hue), 85%, 60%, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* === COIN INFO DISPLAY === */
+#coin-info {
+    padding: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#coinInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* === LOADER === */
+.loader {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid var(--primary-color);
+    border-right: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* === FOOTER === */
+footer {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-smooth);
+}
+
+footer:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+footer h3 {
+    margin: 0 0 0.8rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+footer a {
+    display: inline-block;
+    transition: var(--transition-smooth);
+}
+
+footer a:hover {
+    transform: translateY(-3px) scale(1.1);
+}
+
+footer img {
+    height: 2rem;
+    width: 2rem;
+    filter: grayscale(100%) brightness(1.5);
+    transition: var(--transition-smooth);
+}
+
+footer img:hover {
+    filter: grayscale(0%) brightness(1) drop-shadow(0 0 10px var(--primary-color));
+}
+
+/* === IMAGE UTILITIES === */
+img {
+    max-width: 100%;
+    height: auto;
     object-fit: contain;
 }
 
-h1,h2,p {
-    margin: 0;
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1024px) {
+    #container {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+
+    #ttimg,
+    #coin-container {
+        width: 90%;
+        max-width: 600px;
+    }
+
+    #title {
+        font-size: 4.5rem;
+    }
 }
 
-#container{
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    background-color: rgba(128, 128, 128, 0.076);
+@media (max-width: 768px) {
+    #title {
+        font-size: 3.5rem;
+    }
+
+    #coin-form {
+        padding: 2rem 1.5rem;
+    }
+
+    #leftImg {
+        max-width: 350px;
+    }
 }
 
-#ttimg{
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-}
+@media (max-width: 450px) {
+    #leftImg {
+        display: none;
+    }
 
-#title{
-    font-size: 5rem;
-    font-family: "Bebas Neue", sans-serif;
-    color: white;
-  text-align: center;
-}
+    #container {
+        gap: 1.5rem;
+        padding: 1.5rem 1rem 2rem;
+    }
 
-#coin-container{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 40%;
-}
+    #ttimg,
+    #coin-container {
+        width: 95%;
+    }
 
-.coinIptCont{
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+    #title {
+        font-size: 2.8rem;
+    }
 
+    #coin-form {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
 
+    .coinIptCont label {
+        font-size: 0.85rem;
+    }
 
-select{
-    font-size: 1rem;
-    height: 35px;
-    border-radius: 0.5rem;
-    outline: none; 
-    color: rgb(146, 144, 144);
-}
+    .coinInput,
+    select {
+        font-size: 0.95rem;
+        padding: 0.9rem 1rem;
+    }
 
-#coin-info{
-    color: white;
-    font-size: 1.2rem;
-}
+    #formBtn {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
 
+    #coin-info {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
 
-#coin-form{
-   
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    font-size: 1.5rem;
-}
-
-.coinInput{
-    font-size: 1rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    outline: none;
-}
-
-#formBtn{
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #00a5c2;
-    color: white;
-    transition: all 0.2s ease-in-out;
-}
-
-#formBtn:hover{
-background-color: #03c6e0;
-}
-
-#coinInfo{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    gap: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.price{
-    font-weight: 700;
-}
-
-body{
-    margin: 0;
-    background-color: #050505;
-    background-position: center;
-    background-size: cover;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-footer{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding:  0;
-    margin: 0;
-    background-color: #202020;
-    border-top: none;
-    z-index: 10;
-     
-   }
-   
-   footer h3 {
-    margin: 0;
-    font-size: 1.5rem; 
-}
-
-   footer a{
-   align-self: center;
-   }
-   
-   
-   footer img{
-    
-     height: 2.4rem;
-     width: 2.4rem;
-     
-   }
-
-   .Link-Container{
-    display: flex;
-    
-  }
-  
-  .Links{
-    display: flex;
-   justify-content: center;
-   gap: 50px;
-    padding-bottom: 0.5rem;
-    
-  }
-
-
-  #favicon{
-    height: 16px;
-    width: 16px;
-  }
-
-
-  .loader {
-    border: 16px solid #f3f3f3; 
-    border-top: 16px solid #3498db; 
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    
-  }
-
-  h3{
-    color: white;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-
-  @media (max-width:450px){
-#leftImg{
-    display: none;
-}
-
-#container{
-    flex-direction: column;
-    
-    padding: 0;
-    margin: 0;
-    gap: 0;
-}
-
-#title{
-    align-self: center;
-    font-size: 4rem;
-    margin: auto;
-}
-
-#coin-form{
-    font-size: 1.2rem;
-}
-
-#coin-container{
-    width: 80%;
-}
-
-select{
-    font-size: 0.8rem;
-}
-
-#coinInfo{
-    font-size: 0.8rem;
-}
-  
-imag {
-    display: none;
-}
-    
+    .price {
+        font-size: 1.15rem;
+    }
 }

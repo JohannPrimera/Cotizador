@@ -1,38 +1,44 @@
-//Algoritmo del cotizador
-//1.selectores
-//2.event listener
-//3.funcion de cotizacion
-//4.Actualizar html con la cotizacion
+const form = document.querySelector('#coin-form');
+const coin = document.querySelector('#coin');
+const crypto = document.querySelector('#crypto');
+const amount = document.querySelector('#amount');
+const coinInfo = document.querySelector('#coin-info');
 
-const form = document.querySelector("#coin-form")
-const coin = document.querySelector("#coin")
-const crypto = document.querySelector("#crypto")
-const amount = document.querySelector("#amount")
-const coinInfo = document.querySelector("#coin-info")
-
-form.addEventListener("submit", async e => {
+form.addEventListener('submit', async e => {
     e.preventDefault();
-    const coinSelected = [...coin.children].find(option => option.selected).value
-    console.log(coinSelected)
-    const cryptoSelected = [...crypto.children].find(option => option.selected).value
-    console.log(cryptoSelected)
+    console.log(coin.children);
+    const coinSelected = [...coin.children].find(option => option.selected).value;
+    const cryptoSelected = [...crypto.children].find(option => option.selected).value;
     const amountValue = amount.value;
-    console.log(amountValue)
-
     try {
-        const response = await (await fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoSelected}&tsyms=${coinSelected}`)).json()
-        const price = (response.DISPLAY[cryptoSelected][coinSelected].PRICE)
-        const priceHigh = (response.DISPLAY[cryptoSelected][coinSelected].HIGH24HOUR)
-        const priceLow = (response.DISPLAY[cryptoSelected][coinSelected].LOW24HOUR)
-        const variation = (response.DISPLAY[cryptoSelected][coinSelected].CHANGEPCT24HOUR)
-
         coinInfo.innerHTML = `
-        <p>El precio de ${cryptoSelected} es de ${response.DISPLAY[cryptoSelected][coinSelected].PRICE}</p>
-        <p>El precio mas alto de ${cryptoSelected} en las ultimas 24 horas es de ${response.DISPLAY[cryptoSelected][coinSelected].HIGH24HOUR}</p>
-        <p>El precio mas bajo de ${cryptoSelected} en las ultimas 24 horas es de ${response.DISPLAY[cryptoSelected][coinSelected].LOW24HOUR}</p>
-        <p>El cambio porcentual de ${cryptoSelected} en las ultimas 24 horas es de ${response.DISPLAY[cryptoSelected][coinSelected].CHANGEPCT24HOUR}</p>
-        `
+        <div class="loader"></div>
+        `; 
+        const response = await (await fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoSelected}&tsyms=${coinSelected}`)).json();
+        const price = response.DISPLAY[cryptoSelected][coinSelected].PRICE;
+        const priceHigh = response.DISPLAY[cryptoSelected][coinSelected].HIGH24HOUR;
+        const priceLow = response.DISPLAY[cryptoSelected][coinSelected].LOW24HOUR;
+        const variation = response.DISPLAY[cryptoSelected][coinSelected].CHANGEPCT24HOUR;
+        console.log(response.RAW[cryptoSelected][coinSelected].PRICE);
+
+        if (amountValue !== '') {
+            const result = Number(amountValue) / response.RAW[cryptoSelected][coinSelected].PRICE;
+            coinInfo.innerHTML = `
+        <p class="info">El precio es: <span class="price">${price}</span></p>
+        <p class="info">El precio mas alto es: <span class="price">${priceHigh}</span></p>
+        <p class="info">El precio mas bajo es: <span class="price">${priceLow}</span></p>
+        <p class="info">Variacion 24H: <span class="price">${variation}%</span></p>
+        <p class="info">Puede comprar: <span class="price">${result.toFixed(4)} ${cryptoSelected}</span></p>
+        `;
+        } else {
+            coinInfo.innerHTML = `
+            <p class="info">El precio es: <span class="price">${price}</span></p>
+            <p class="info">El precio mas alto es: <span class="price">${priceHigh}</span></p>
+            <p class="info">El precio mas bajo es: <span class="price">${priceLow}</span></p>
+            <p class="info">Variacion 24H: <span class="price">${variation}%</span></p>
+        `;
+        }
     } catch (error) {
         console.log(error);
     }
-})
+});
